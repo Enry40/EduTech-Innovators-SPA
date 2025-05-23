@@ -1,7 +1,8 @@
 package com.EduTechInnovators.cl.EduTech.Innovators.SPA.controller;
 
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Administrador;
-import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Usuario;
+import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Estudiante;
+import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Profesor;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.service.AdministradorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,29 +29,57 @@ public class AdministradorController {
         return administradorService.deleteAdministrador(id);
     }
 
-   @ PostMapping("/usuario")
-    public String addUsuario(@RequestBody Usuario usuario) {
-        return administradorService.addUsuario(usuario);
+
+    @PostMapping("/estudiante")
+    public String addEstudiante(@RequestBody Estudiante estudiante) {
+        return administradorService.addEstudiante(estudiante);
     }
 
-    @GetMapping("/usuario/{id}")
-    public String getUsuarioById(@PathVariable int id) {
-        return administradorService.getUsuarioById(id);
+    @GetMapping("/estudiante/{id}")
+    public String getEstudianteById(@PathVariable int id) {
+        return administradorService.getEstudianteById(id);
     }
 
-    @PutMapping("/usuario/{id}")
-    public String updateUsuario(@PathVariable int id, @RequestBody Usuario usuario) {
-        return administradorService.updateUsuario(id, usuario);
+    @PutMapping("/estudiante/{id}")
+    public String updateEstudiante(@PathVariable int id, @RequestBody Estudiante estudiante) {
+        return administradorService.updateEstudiante(id, estudiante);
     }
 
-    @DeleteMapping("/usuario/{id}")
-    public String deleteUsuario(@PathVariable int id) {
-        return administradorService.deleteUsuario(id);
+    @DeleteMapping("/estudiante/{id}")
+    public String deleteEstudiante(@PathVariable int id) {
+        return administradorService.deleteEstudiante(id);
     }
 
-    @GetMapping("/usuario")
-    public String getAllUsuarios() {
-        return administradorService.getAllUsuarios();
+    @GetMapping("/estudiante/{id}")
+    public String getAllEstudiantes() {
+        return administradorService.getAllEstudiantes();
     }
+
+
+    @PostMapping("/profesor")
+    public String addProfesor(@RequestBody Profesor profesor) {
+        return administradorService.addProfesor(profesor);
+    }
+
+    @GetMapping("/profesor/{id}")
+    public String getProfesorById(@PathVariable int id) {
+        return administradorService.getProfesorById(id);
+    }
+
+    @PutMapping("/profesor/{id}")
+    public String updateProfesor(@PathVariable int id, @RequestBody Profesor profesor) {
+        return administradorService.updateProfesor(id, profesor);
+    }
+
+    @DeleteMapping("/profesor/{id}")
+    public String deleteProfesor(@PathVariable int id) {
+        return administradorService.deleteProfesor(id);
+    }
+    @GetMapping
+    public String getAllProfesores() {
+        return administradorService.getAllProfesores();
+    }
+
+
 
 }

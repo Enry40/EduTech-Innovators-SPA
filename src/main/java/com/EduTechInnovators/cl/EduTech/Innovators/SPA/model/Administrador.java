@@ -18,9 +18,6 @@ public class Administrador {
     private int idAdmin;
 
     @OneToMany(mappedBy = "administrador")
-    private List<Usuario> usuarios;
-
-    @OneToMany(mappedBy = "administrador")
     private List<Estudiante> estudiantes;
 
     @OneToMany(mappedBy = "administrador")

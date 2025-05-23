@@ -1,6 +1,7 @@
 package com.EduTechInnovators.cl.EduTech.Innovators.SPA.controller;
 
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Administrador;
+import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Curso;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Estudiante;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Profesor;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.service.AdministradorService;
@@ -80,6 +81,29 @@ public class AdministradorController {
         return administradorService.getAllProfesores();
     }
 
+    @PostMapping("/curso")
+    public String addCurso(@RequestBody Curso curso) {
+        return administradorService.addCurso(curso);
+    }
 
+    @GetMapping("/curso/{id}")
+    public String getCursoById(@PathVariable int id) {
+        return administradorService.getCursoById(id);
+    }
+
+    @PutMapping("/curso/{id}")
+    public String updateCurso(@PathVariable int id, @RequestBody Curso curso) {
+        return administradorService.updateCurso(id, curso);
+    }
+
+    @DeleteMapping("/curso/{id}")
+    public String deleteCurso(@PathVariable int id) {
+        return administradorService.deleteCurso(id);
+    }
+
+    @GetMapping
+    public String getAllCursos() {
+        return administradorService.getAllCursos();
+    }
 
 }

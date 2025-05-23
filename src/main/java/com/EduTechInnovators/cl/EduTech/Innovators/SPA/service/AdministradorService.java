@@ -1,9 +1,11 @@
 package com.EduTechInnovators.cl.EduTech.Innovators.SPA.service;
 
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Administrador;
+import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Curso;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Estudiante;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Profesor;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.repository.AdministradorRepository;
+import com.EduTechInnovators.cl.EduTech.Innovators.SPA.repository.CursoRepository;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.repository.EstudianteRepository;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.repository.ProfesorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,6 @@ public class AdministradorService {
 
     @Autowired
     private AdministradorRepository administradorRepository;
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     @Autowired
     private EstudianteRepository estudianteRepository;
@@ -23,14 +23,19 @@ public class AdministradorService {
     @Autowired
     private ProfesorRepository profesorRepository;
 
+    @Autowired
+    private CursoRepository cursoRepository;
+
     public  String addAdministrador(Administrador admin){
         administradorRepository.save(admin);
         return "Administrador creado";
     }
 
-    public  String getAdministradorById(int id){
+    public String getAdministradorById(int id){
         String output = "";
         if (administradorRepository.existsById(id)){
+            Administrador admin = administradorRepository.findById(id).get();
+            output += "ID Administrador: " + admin.getIdAdmin() + "\n";
             return output;
         } else{
             return "No existe el administrador";
@@ -43,64 +48,6 @@ public class AdministradorService {
             return "Administrador eliminado";
         } else{
             return "No existe el administrador";
-        }
-    }
-
-    public String addUsuario(Usuario usuario){
-        usuarioRepository.save(usuario);
-        return "Usuario creado";
-    }
-
-    public String getUsuarioById(int id){
-        String output = "";
-        if (usuarioRepository.existsById(id)){
-            Usuario usuario = usuarioRepository.findById(id).get();
-            output += "ID Usuario: " + usuario.getIdUsuario() + "\n";
-            output += "Nombre: " + usuario.getNombreUsuario() +"\n";
-            output += "Contrasenia: " + usuario.getContrasenia() +"\n";
-            output += "Correo: " + usuario.getCorreo() +"\n";
-            output += "Tipo de usuario: " + usuario.getTipoUsuario() +"\n";
-            return output;
-        } else{
-            return "No existe el usuario";
-        }
-    }
-
-    public String updateUsuario(int id, Usuario usuario){
-        if (usuarioRepository.existsById(id)){
-            Usuario buscado = usuarioRepository.findById(id).get();
-            buscado.setNombreUsuario(usuario.getNombreUsuario());
-            buscado.setContrasenia(usuario.getContrasenia());
-            buscado.setCorreo(usuario.getCorreo());
-            buscado.setTipoUsuario(usuario.getTipoUsuario());
-            return "Usuario actualizado";
-        } else{
-            return "No existe el usuario";
-        }
-    }
-
-    public  String deleteUsuario(int id){
-        if (usuarioRepository.existsById(id)){
-            usuarioRepository.deleteById(id);
-            return "Usuario eliminado";
-        } else{
-            return "No existe el usuario";
-        }
-    }
-
-    public String getAllUsuarios() {
-        String output = "";
-        for (Usuario usuario : usuarioRepository.findAll()) {
-            output += "ID Usuario: " + usuario.getIdUsuario() + "\n";
-            output += "Nombre: " + usuario.getNombreUsuario() +"\n";
-            output += "Contrasenia: " + usuario.getContrasenia() +"\n";
-            output += "Correo: " + usuario.getCorreo() +"\n";
-            output += "Tipo de usuario: " + usuario.getTipoUsuario() +"\n";
-        }
-        if (output.isEmpty()){
-            return "No se encontraron usuarios";
-        }else{
-            return output;
         }
     }
 
@@ -124,7 +71,7 @@ public class AdministradorService {
 
     public String updateEstudiante(int id, Estudiante estudiante){
         if (estudianteRepository.existsById(id)){
-            Estudiante buscado = usuarioRepository.findById(id).get();
+            Estudiante buscado = estudianteRepository.findById(id).get();
             buscado.setNombreEstudiante(estudiante.getNombreEstudiante());
             buscado.setCursosInscritos(estudiante.getCursosInscritos());
             return "Estudiante actualizado";
@@ -137,6 +84,8 @@ public class AdministradorService {
         if (estudianteRepository.existsById(id)){
             estudianteRepository.deleteById(id);
             return "Estudiante eliminado";
+        } else {
+            return "No existe el estudiante";
         }
     }
 
@@ -187,8 +136,11 @@ public class AdministradorService {
         if (profesorRepository.existsById(id)){
             profesorRepository.deleteById(id);
             return "Profesor eliminado";
+        } else {
+            return "No existe el profesor";
         }
     }
+
 
     public String getAllProfesores() {
         String output = "";
@@ -199,9 +151,61 @@ public class AdministradorService {
         }
         if (output.isEmpty()){
             return "No se encontraron profesores";
+        } else {
+            return output;
         }
     }
 
+    public String addCurso(Curso curso) {
+        cursoRepository.save(curso);
+        return "Curso creado";
+    }
 
+    public String getCursoById(int id){
+        String output = "";
+        if (cursoRepository.existsById(id)){
+            Curso curso = cursoRepository.findById(id).get();
+            output += "ID Curso: " + curso.getIdCurso() + "\n";
+            output += "Nombre: " + curso.getNombreCurso() + "\n";
+            output += "Descripcion: " + curso.getDescripcionCurso() + "\n";
+            return output;
+        } else {
+            return "No existe el curso";
+        }
+    }
+
+    public String updateCurso(int id, Curso curso){
+        if (cursoRepository.existsById(id)){
+            Curso buscado = cursoRepository.findById(id).get();
+            buscado.setNombreCurso(curso.getNombreCurso());
+            buscado.setDescripcionCurso(curso.getDescripcionCurso());
+            return "Curso actualizado";
+        } else {
+            return "No existe el curso";
+        }
+    }
+
+    public String deleteCurso(int id){
+        if (cursoRepository.existsById(id)){
+            cursoRepository.deleteById(id);
+            return "Curso eliminado";
+        } else {
+            return "No existe el curso";
+        }
+    }
+
+    public String getAllCursos() {
+        String output = "";
+        for (Curso curso : cursoRepository.findAll()) {
+            output += "ID Curso: " + curso.getIdCurso() + "\n";
+            output += "Nombre: " + curso.getNombreCurso() + "\n";
+            output += "Descripcion: " + curso.getDescripcionCurso() + "\n";
+        }
+        if (output.isEmpty()){
+            return "No se encontraron Cursos";
+        } else {
+            return output;
+        }
+    }
 
 }

@@ -18,6 +18,7 @@ public class Evaluacion {
     @Id
     private int idEvaluacion;
     private String tituloEvaluacion;
+    private int notaEvaluacion;
 
     @ManyToOne
     private Profesor profesor;

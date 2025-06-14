@@ -7,14 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdministradorServiceImpl implements AdministradorService{
+public class AdministradorServiceImpl implements AdministradorService {
 
-    @Autowired
     private final UsuarioRepository usuarioRepository;
 
-    @Autowired
     private final AdministradorRepository administradorRepository;
 
+    @Autowired
     public AdministradorServiceImpl(UsuarioRepository usuarioRepository,
                                     AdministradorRepository administradorRepository) {
         this.usuarioRepository = usuarioRepository;
@@ -32,7 +31,7 @@ public class AdministradorServiceImpl implements AdministradorService{
     public String getAllAdmin() {
         String output = "";
         for (Administrador admin : administradorRepository.findAll()) {
-            output += "ID Administrador: " + admin.getId() + "\n";
+            output += "ID Usuario: " + admin.getId() + "\n";
             output += "Nombre: " + admin.getNombreUsuario() + "\n";
             output += "Apellido: " + admin.getApellidoUsuario() + "\n";
             output += "Telefono: " + admin.getTelefonoUsuario() + "\n";
@@ -62,16 +61,6 @@ public class AdministradorServiceImpl implements AdministradorService{
     }
 
     @Override
-    public String deleteAdmin(int id) {
-        if (administradorRepository.existsById(id)) {
-            administradorRepository.deleteById(id);
-            return "Administrador eliminado con exito";
-        } else {
-            return "Administrador no encontrado";
-        }
-    }
-
-    @Override
     public String updateAdmin(int id, Administrador admin) {
         if (administradorRepository.existsById(id)) {
             Administrador buscado = administradorRepository.findById(id).get();
@@ -82,6 +71,16 @@ public class AdministradorServiceImpl implements AdministradorService{
             buscado.setCorreoAdmin(admin.getCorreoAdmin());
             administradorRepository.save(buscado);
             return "Administrador actualizado con exito";
+        } else {
+            return "Administrador no encontrado";
+        }
+    }
+
+    @Override
+    public String deleteAdmin(int id) {
+        if (administradorRepository.existsById(id)) {
+            administradorRepository.deleteById(id);
+            return "Administrador eliminado con exito";
         } else {
             return "Administrador no encontrado";
         }

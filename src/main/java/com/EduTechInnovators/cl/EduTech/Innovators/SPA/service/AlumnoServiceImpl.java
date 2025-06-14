@@ -6,10 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AlumnoServiceImpl implements AlumnoService{
+public class AlumnoServiceImpl implements AlumnoService {
+
+    private final AlumnoRepository alumnoRepository;
 
     @Autowired
-    private AlumnoRepository alumnoRepository;
+    public AlumnoServiceImpl(AlumnoRepository alumnoRepository) {
+        this.alumnoRepository = alumnoRepository;
+    }
 
     @Override
     public String addAlumno(Alumno alu) {

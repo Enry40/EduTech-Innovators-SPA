@@ -13,8 +13,8 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table (name = "alumnos")
-@EqualsAndHashCode (callSuper=true)
+@Table(name = "alumnos")
+@EqualsAndHashCode(callSuper = true)
 public class Alumno extends Usuario{
     private String correoAlumno;
     private String carrera;

@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table (name = "usuarios")
-@Inheritance (strategy = InheritanceType.JOINED)
-public class Usuario {
+@Table(name = "usuarios")
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Usuario {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombreUsuario;
     private String apellidoUsuario;

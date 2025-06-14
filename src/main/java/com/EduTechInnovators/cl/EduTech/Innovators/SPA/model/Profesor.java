@@ -14,8 +14,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table (name = "profesores")
-@EqualsAndHashCode (callSuper=true)
-public class Profesor extends Usuario{
+@EqualsAndHashCode (callSuper = true)
+public class Profesor extends Usuario {
     private String correoProfe;
     private String asignatura;
     private String especialidad;
@@ -27,5 +27,4 @@ public class Profesor extends Usuario{
             inverseJoinColumns = @JoinColumn(name = "curso_id")
     )
     private Set<Curso> cursos = new HashSet<>();
-
 }

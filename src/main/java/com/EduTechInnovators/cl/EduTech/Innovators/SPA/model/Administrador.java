@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table (name = "administradores")
-@EqualsAndHashCode (callSuper=true)
+@Table(name = "administradores")
+@EqualsAndHashCode(callSuper = true)
 public class Administrador extends Usuario{
     private String correoAdmin;
 }

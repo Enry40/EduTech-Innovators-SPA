@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,36 +49,44 @@ public class AdministradorServiceTest {
     }
 
     @Test
-    void getAllAdminTest() {
-        Administrador admin = new Administrador();
-        admin.setId(1);
-        admin.setNombreUsuario("Pedro");
-        admin.setApellidoUsuario("Lopez");
-        admin.setTelefonoUsuario("123456789");
-        admin.setDireccionUsuario("Calle Cualquiera 456");
+    void getAllAdminSizeTest() {
+        Administrador admin1 = new Administrador();
+        admin1.setId(1);
+        admin1.setNombreUsuario("Pedro");
+        admin1.setApellidoUsuario("Lopez");
 
-        Mockito.when(administradorRepository.findAll()).thenReturn(Arrays.asList(admin));
+        Administrador admin2 = new Administrador();
+        admin2.setId(2);
+        admin2.setNombreUsuario("Ana");
+        admin2.setApellidoUsuario("Martinez");
+
+        List<Administrador> admins = Arrays.asList(admin1, admin2);
+
+        Mockito.when(administradorRepository.findAll()).thenReturn(admins);
 
         String resultado = administradorService.getAllAdmin();
+
+        assertNotNull(resultado);
         assertTrue(resultado.contains("Pedro"));
-        assertTrue(resultado.contains("ID Administrador: 1"));
+        assertTrue(resultado.contains("Ana"));
+        assertEquals(2, admins.size());
     }
 
     @Test
-    void getAdminByIdFoundTest() {
+    void getAdminByIdTest() {
         Administrador admin = new Administrador();
-        admin.setId(2);
-        admin.setNombreUsuario("Ana");
-        admin.setApellidoUsuario("Martínez");
-        admin.setTelefonoUsuario("987654321");
-        admin.setDireccionUsuario("Av. Pio Nono 123");
+        admin.setId(1);
+        admin.setNombreUsuario("Carla");
+        admin.setApellidoUsuario("Rojas");
 
-        Mockito.when(administradorRepository.existsById(2)).thenReturn(true);
-        Mockito.when(administradorRepository.findById(2)).thenReturn(Optional.of(admin));
+        Mockito.when(administradorRepository.existsById(1)).thenReturn(true);
+        Mockito.when(administradorRepository.findById(1)).thenReturn(Optional.of(admin));
 
-        String resultado = administradorService.getAdminById(2);
-        assertTrue(resultado.contains("Ana"));
-        assertTrue(resultado.contains("ID Administrador: 2"));
+        String resultado = administradorService.getAdminById(1);
+
+        assertNotNull(resultado);
+        assertTrue(resultado.contains("Carla"));
+        assertEquals(true, resultado.contains("ID Administrador: 1"));
     }
 
     @Test

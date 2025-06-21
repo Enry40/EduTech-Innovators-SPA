@@ -95,10 +95,10 @@ public class AlumnoServiceTest {
         existente.setNombreUsuario("Felipe");
 
         Alumno actualizado = new Alumno();
-        actualizado.setNombreUsuario("Felipe Actualizado");
+        actualizado.setNombreUsuario("Felipe");
         actualizado.setApellidoUsuario("Torres");
         actualizado.setTelefonoUsuario("123456789");
-        actualizado.setDireccionUsuario("Calle Alameda");
+        actualizado.setDireccionUsuario("Calle Alameda (updated)");
         actualizado.setCorreoAlumno("felipe@correo.com");
         actualizado.setCarrera("Matematicas");
 

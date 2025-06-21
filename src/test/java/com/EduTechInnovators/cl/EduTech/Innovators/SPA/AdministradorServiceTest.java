@@ -9,8 +9,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -19,50 +19,48 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AdministradorServicesTest {
+public class AdministradorServiceTest {
 
     @Autowired
     MockMvc mockMvc;
 
-     @MockBean
+    @MockBean
     AdministradorRepository administradorRepository;
 
-     @MockBean
+    @MockBean
     UsuarioRepository usuarioRepository;
 
-     @Autowired
+    @Autowired
     AdministradorServiceImpl administradorService;
 
-     @Test
+    @Test
     void addAdminTest() {
-         Administrador admin = new Administrador();
-         admin.setNombreUsuario("Juan");
-         admin.setApellidoUsuario("Valdez");
+        Administrador admin = new Administrador();
+        admin.setNombreUsuario("Juan");
+        admin.setApellidoUsuario("Valdez");
 
-         String resultado = administradorService.addAdmin(admin);
-         assertEquals("Administrador creado correctamente", resultado);
-         assertEquals("Administrador", admin.getTipoUsuario());
+        String resultado = administradorService.addAdmin(admin);
+        assertEquals("Administrador creado correctamente", resultado);
+        assertEquals("Administrador", admin.getTipoUsuario());
 
-     }
+    }
 
     @Test
     void getAllAdminTest() {
         Administrador admin = new Administrador();
         admin.setId(1);
-        admin.setNombreUsuario("Juan");
-        admin.setApellidoUsuario("Valdez");
+        admin.setNombreUsuario("Pedro");
+        admin.setApellidoUsuario("Lopez");
         admin.setTelefonoUsuario("123456789");
-        admin.setDireccionUsuario("Av. Antonio Varas 666");
+        admin.setDireccionUsuario("Calle Cualquiera 456");
 
         Mockito.when(administradorRepository.findAll()).thenReturn(Arrays.asList(admin));
 
         String resultado = administradorService.getAllAdmin();
-        assertTrue(resultado.contains("Juan"));
+        assertTrue(resultado.contains("Pedro"));
         assertTrue(resultado.contains("ID Administrador: 1"));
-
     }
 
     @Test
@@ -123,4 +121,3 @@ public class AdministradorServicesTest {
         assertEquals("Administrador no encontrado", resultado);
     }
 }
-

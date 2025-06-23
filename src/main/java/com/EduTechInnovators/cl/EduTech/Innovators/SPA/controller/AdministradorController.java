@@ -1,5 +1,6 @@
 package com.EduTechInnovators.cl.EduTech.Innovators.SPA.controller;
 
+import com.EduTechInnovators.cl.EduTech.Innovators.SPA.assembler.AdministradorModelAssembler;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Administrador;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Alumno;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.model.Curso;
@@ -8,8 +9,17 @@ import com.EduTechInnovators.cl.EduTech.Innovators.SPA.service.AdministradorServ
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.service.AlumnoServiceImpl;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.service.CursoService;
 import com.EduTechInnovators.cl.EduTech.Innovators.SPA.service.ProfesorServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,31 +41,84 @@ public class AdministradorController {
     @Autowired
     private CursoService cursoService;
 
-    // Administrador
+    @Autowired
+    AdministradorModelAssembler assembler;
+
+    // ADMINISTRADOR
     @PostMapping
-    public String addAdmin(@RequestBody Administrador admin) {
-        admin.setTipoUsuario("Administrador");
-        return administradorService.addAdmin(admin);
+    @Operation(summary = "Agregar Administrador", description = "Permite registrar un administrador en el sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Administrador creado",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Administrador.class))),
+            @ApiResponse(responseCode = "204", description = "No hay contenido en la solicitud")
+    })
+    public ResponseEntity<String> addAdmin(@RequestBody Administrador administrador) {
+        String response = administradorService.addAdmin(administrador);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public String getAllAdmin() {
-        return administradorService.getAllAdmin();
+    @Operation(summary = "Obtener Administradores", description = "Obtiene la lista completa de administradores registrados en el sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna lista completa de administradores"),
+            @ApiResponse(responseCode = "404", description = "No se encuentran datos")
+    })
+    public ResponseEntity<String> getAllAdmin() {
+        String response = administradorService.getAllAdmin();
+        if (response.equals("No se encontraron administradores")) {
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/{id}")
-    public String getAdminById(@PathVariable int id) {
-        return administradorService.getAdminById(id);
+    @Operation(summary = "Buscar Administrador por ID", description = "Obtiene un administrador según el ID registrado en el sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna Administrador"),
+            @ApiResponse(responseCode = "404", description = "No se encuentran datos")
+    })
+    @Parameter(description = "El ID del administrador", example = "123")
+    public ResponseEntity<String> getAdminById(@PathVariable int id) {
+        String response = administradorService.getAdminById(id);
+        if (response.contains("Administrador no encontrado")) {
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 
     @PutMapping("/{id}")
-    public String updateAdmin(@PathVariable int id, @RequestBody Administrador admin) {
-        return administradorService.updateAdmin(id, admin);
+    @Operation(summary = "Actualizar Administrador", description = "Permite actualizar los datos de un administrador según su ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Administrador modificado",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Administrador.class))),
+            @ApiResponse(responseCode = "204", description = "No hay contenido en la solicitud")
+    })
+    @Parameter(description = "El ID del administrador", example = "123")
+    public ResponseEntity<String> updateAdmin(@PathVariable int id, @RequestBody Administrador administrador) {
+        String response = administradorService.updateAdmin(id, administrador);
+        if (response.contains("Administrador no encontrado")) {
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public String deleteAdmin(@PathVariable int id) {
-        return administradorService.deleteAdmin(id);
+    @Operation(summary = "Eliminar Administrador por ID", description = "Elimina un administrador según el ID registrado en el sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Administrador eliminado"),
+            @ApiResponse(responseCode = "404", description = "No se encuentran datos")
+    })
+    @Parameter(description = "El ID del administrador", example = "123")
+    public ResponseEntity<String> deleteAdmin(@PathVariable int id) {
+        String response = administradorService.deleteAdmin(id);
+        if (response.contains("Administrador no encontrado")) {
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 
     // Alumno

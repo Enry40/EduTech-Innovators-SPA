@@ -32,7 +32,7 @@ public class AdministradorModelAssembler implements RepresentationModelAssembler
 
                 linkTo(methodOn(AdministradorController.class).addProfesor(new Profesor())).withRel("add-profesor"),
                 linkTo(methodOn(AdministradorController.class).getAllProfesores()).withRel("profesores"),
-                linkTo(methodOn(AdministradorController.class).getProfesorById(1)).withRel("get-profesor-by-id"),
+                linkTo(methodOn(AdministradorController.class).getProfesoresById(1)).withRel("get-profesor-by-id"),
                 linkTo(methodOn(AdministradorController.class).updateProfesor(1, new Profesor())).withRel("update-profesor"),
                 linkTo(methodOn(AdministradorController.class).deleteProfesor(1)).withRel("delete-profesor"),
 
